@@ -360,45 +360,158 @@ class _HomeScreenState extends State<HomeScreen> {
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 12),
-            DropdownButtonFormField<String>(
-              value: _dietType,
-              decoration: InputDecoration(
-                labelText: 'Loại lễ',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                prefixIcon: const Icon(Icons.food_bank, color: Colors.red),
-              ),
-              items:
-                  ['mặn', 'chay']
-                      .map(
-                        (type) =>
-                            DropdownMenuItem(value: type, child: Text(type)),
-                      )
-                      .toList(),
-              onChanged: (value) => setState(() => _dietType = value!),
-            ),
-            const SizedBox(height: 12),
-            DropdownButtonFormField<String>(
-              value: _ceremonyStyle,
-              decoration: InputDecoration(
-                labelText: 'Mức độ cầu kỳ',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                prefixIcon: const Icon(
-                  Icons.design_services,
-                  color: Colors.red,
-                ),
-              ),
-              items:
-                  ['đơn giản', 'cầu kỳ']
-                      .map(
-                        (style) =>
-                            DropdownMenuItem(value: style, child: Text(style)),
-                      )
-                      .toList(),
-              onChanged: (value) => setState(() => _ceremonyStyle = value!),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isWideScreen = constraints.maxWidth > 600; // Web > 600px
+                return Column(
+                  children: [
+                    DropdownButtonFormField<String>(
+                      value: _dietType,
+                      decoration: InputDecoration(
+                        labelText: 'Loại lễ',
+                        labelStyle: TextStyle(
+                          color: Colors.red[600],
+                          fontSize: isWideScreen ? 16 : 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.red[200]!,
+                            width: 1,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.red[200]!,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.red[600]!,
+                            width: 2,
+                          ),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.food_bank,
+                          color: Colors.red[600],
+                        ),
+                        filled: true,
+                        fillColor: Colors.red[50],
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: isWideScreen ? 16 : 12,
+                          vertical: isWideScreen ? 12 : 10,
+                        ),
+                      ),
+                      items:
+                          ['mặn', 'chay']
+                              .map(
+                                (type) => DropdownMenuItem(
+                                  value: type,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        type == 'mặn'
+                                            ? Icons.fastfood
+                                            : Icons.local_florist,
+                                        color: Colors.red[400],
+                                        size: isWideScreen ? 20 : 16,
+                                      ),
+                                      SizedBox(width: isWideScreen ? 8 : 4),
+                                      Text(
+                                        type,
+                                        style: TextStyle(
+                                          fontSize: isWideScreen ? 14 : 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                      onChanged: (value) => setState(() => _dietType = value!),
+                      dropdownColor: Colors.white,
+                      style: const TextStyle(color: Colors.black87),
+                      icon: Icon(Icons.arrow_drop_down, color: Colors.red[600]),
+                    ),
+                    const SizedBox(height: 12),
+                    DropdownButtonFormField<String>(
+                      value: _ceremonyStyle,
+                      decoration: InputDecoration(
+                        labelText: 'Mức độ cầu kỳ',
+                        labelStyle: TextStyle(
+                          color: Colors.red[600],
+                          fontSize: isWideScreen ? 16 : 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.red[200]!,
+                            width: 1,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.red[200]!,
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: Colors.red[600]!,
+                            width: 2,
+                          ),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.design_services,
+                          color: Colors.red[600],
+                        ),
+                        filled: true,
+                        fillColor: Colors.red[50],
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: isWideScreen ? 16 : 12,
+                          vertical: isWideScreen ? 12 : 10,
+                        ),
+                      ),
+                      items:
+                          ['đơn giản', 'cầu kỳ']
+                              .map(
+                                (style) => DropdownMenuItem(
+                                  value: style,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        style == 'đơn giản'
+                                            ? Icons.hourglass_empty
+                                            : Icons.hourglass_full,
+                                        color: Colors.red[400],
+                                        size: isWideScreen ? 20 : 16,
+                                      ),
+                                      SizedBox(width: isWideScreen ? 8 : 4),
+                                      Text(
+                                        style,
+                                        style: TextStyle(
+                                          fontSize: isWideScreen ? 14 : 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                      onChanged:
+                          (value) => setState(() => _ceremonyStyle = value!),
+                      dropdownColor: Colors.white,
+                      style: const TextStyle(color: Colors.black87),
+                      icon: Icon(Icons.arrow_drop_down, color: Colors.red[600]),
+                    ),
+                  ],
+                );
+              },
             ),
           ],
         ),
@@ -407,58 +520,85 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildActionButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ElevatedButton(
-          onPressed: _isLoading ? null : _getPlan,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red[600],
-            foregroundColor: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWideScreen = constraints.maxWidth > 600; // Web thường > 600px
+        return Wrap(
+          alignment: WrapAlignment.center,
+          spacing: isWideScreen ? 16 : 8, // Khoảng cách lớn hơn trên web
+          runSpacing: 8, // Khoảng cách dòng khi xuống hàng
+          children: [
+            ElevatedButton(
+              onPressed: _isLoading ? null : _getPlan,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red[600],
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isWideScreen ? 24 : 16, // Thu nhỏ trên mobile
+                  vertical: isWideScreen ? 12 : 10,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 4,
+                textStyle: TextStyle(
+                  fontSize: isWideScreen ? 16 : 14, // Font lớn hơn trên web
+                ),
+              ).copyWith(
+                // Hiệu ứng hover cho web
+                overlayColor: WidgetStateProperty.all(
+                  Colors.white.withOpacity(0.2),
+                ),
+              ),
+              child:
+                  _isLoading
+                      ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation(Colors.white),
+                        ),
+                      )
+                      : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.lightbulb, size: 20),
+                          SizedBox(width: isWideScreen ? 8 : 4),
+                          const Text('Gợi ý kế hoạch'),
+                        ],
+                      ),
             ),
-            elevation: 4,
-          ),
-          child:
-              _isLoading
-                  ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation(Colors.white),
-                    ),
-                  )
-                  : const Row(
-                    children: [
-                      Icon(Icons.lightbulb),
-                      SizedBox(width: 8),
-                      Text('Gợi ý kế hoạch', style: TextStyle(fontSize: 16)),
-                    ],
-                  ),
-        ),
-        const SizedBox(width: 16),
-        OutlinedButton(
-          onPressed: _isLoading ? null : _requestConsultation,
-          style: OutlinedButton.styleFrom(
-            foregroundColor: Colors.red[600],
-            side: BorderSide(color: Colors.red[600]!, width: 2),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+            ElevatedButton(
+              onPressed: _isLoading ? null : _requestConsultation,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.red[600],
+                padding: EdgeInsets.symmetric(
+                  horizontal: isWideScreen ? 24 : 16,
+                  vertical: isWideScreen ? 12 : 10,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(color: Colors.red[600]!, width: 2),
+                ),
+                elevation: 0, // Không bóng cho nút viền
+                textStyle: TextStyle(fontSize: isWideScreen ? 16 : 14),
+              ).copyWith(
+                overlayColor: WidgetStateProperty.all(Colors.red[100]),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.support_agent, size: 20),
+                  SizedBox(width: isWideScreen ? 8 : 4),
+                  const Text('Yêu cầu tư vấn'),
+                ],
+              ),
             ),
-          ),
-          child: const Row(
-            children: [
-              Icon(Icons.support_agent),
-              SizedBox(width: 8),
-              Text('Yêu cầu tư vấn', style: TextStyle(fontSize: 16)),
-            ],
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 
@@ -565,28 +705,86 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildSuggestionItem(String title, String content) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.red,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWideScreen = constraints.maxWidth > 600; // Web thường > 600px
+        return Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          padding: EdgeInsets.all(
+            isWideScreen ? 16 : 12,
+          ), // Padding lớn hơn trên web
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.red[100]!, width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          content,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.black87,
-            height: 1.5,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Biểu tượng theo loại mục
+              Icon(
+                _getIconForTitle(title),
+                color: Colors.red[600],
+                size: isWideScreen ? 24 : 20,
+              ),
+              SizedBox(width: isWideScreen ? 12 : 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: isWideScreen ? 18 : 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red[600],
+                      ),
+                    ),
+                    SizedBox(height: isWideScreen ? 8 : 6),
+                    Text(
+                      content,
+                      style: TextStyle(
+                        fontSize: isWideScreen ? 14 : 12,
+                        color: Colors.black87,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+        );
+      },
     );
+  }
+
+  // Hàm chọn biểu tượng theo tiêu đề
+  IconData _getIconForTitle(String title) {
+    switch (title) {
+      case 'Thực đơn':
+        return Icons.restaurant_menu;
+      case 'Vật dụng':
+        return Icons.inventory;
+      case 'Nghi thức':
+        return Icons.event_note;
+      case 'Văn khấn':
+        return Icons.book;
+      case 'Ngân sách ước tính':
+        return Icons.attach_money;
+      case 'Giải thích ngày lễ':
+        return Icons.info;
+      default:
+        return Icons.circle; // Mặc định
+    }
   }
 
   @override
